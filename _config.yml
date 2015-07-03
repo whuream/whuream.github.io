@@ -1,0 +1,9 @@
+markdown: rdiscount
+permalink: /posts/:year-:month-:day-:title.html
+author: ream
+paginate: 16
+
+defaults:
+  -
+    values:
+      layout: "post"
