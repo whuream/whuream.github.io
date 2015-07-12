@@ -49,7 +49,7 @@ layout: default
 
 ---
 ###感谢
-感谢两位[室](http://f2light.com/)[友](http://brickgao.com/)在我大一对（非）专业知识一无所知的时候带我入门。
+感谢两位[室](http://f2light.com/)[友](http://brickgao.com/)在我大一对（非）专业知识一无所知的时候带我入门，教会我各种姿势。
 
 感谢[陈院长](https://github.com/mad4alcohol/)指导我写Python代码。
 
