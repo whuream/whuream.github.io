@@ -70,5 +70,5 @@ QQ: [13080674755](tencent://message/?uin=13080674755)
 ###简历
 [中文](/media/pdf/resume_CN_v2.3.pdf)
 
-[英文](/media/pdf/resume_EN_v2.0.pdf)
+英文
 
