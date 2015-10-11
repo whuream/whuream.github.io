@@ -60,7 +60,7 @@ layout: default
 
 github : [whuream](https://github.com/whuream)
 
-QQ: [13080674755](tencent://message/?uin=13080674755)
+QQ: [1069700995](tencent://message/?uin=1069700995)
 
 ---
 ###仅有的照片
