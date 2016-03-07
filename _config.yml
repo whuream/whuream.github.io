@@ -1,4 +1,5 @@
-markdown: rdiscount
+gems: [jekyll-paginate]
+markdown: kramdown
 permalink: /posts/:year-:month-:day-:title.html
 author: ream
 paginate: 16
