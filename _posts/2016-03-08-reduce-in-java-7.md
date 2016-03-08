@@ -55,4 +55,6 @@ title: "Java 7 中的 Reduce"
 
     [1,2,2,3]
 
+滥用函数式的例子：
 
+![](../media/pic/1.pic.jpg)
