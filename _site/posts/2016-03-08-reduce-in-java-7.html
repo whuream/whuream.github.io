@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="ream" />
-    <title>Homepage | ream</title>
+    <title>Java 7 中的 Reduce | ream</title>
     <link rel="stylesheet" href="/media/css/style.css">
   </head>
 
@@ -37,7 +37,7 @@
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>Homepage</h1>
+        <h1>Java 7 中的 Reduce</h1>
         </header>
         <nav>
         <span><a title="home page" class="" href="/">Home</a></span>
@@ -46,37 +46,76 @@
         </nav>
         <article class="content">
         <section class="post">
-<ul class="listing">
+<div class="highlighter-rouge"><pre class="highlight"><code>public static &lt;F, T&gt; T reduce(final Iterator&lt;F&gt; iterator,
+                              final T begin,
+                              final Function&lt;? super F, T&gt; function) {
+    T ret = begin;
+    while (iterator.hasNext()) {
+        ret = function.apply(iterator.next(), ret);
+    }
 
-  
-  
-    
-    <li class="listing-seperator">2016</li>
-  
-  <li class="listing-item">
-    <time datetime="2016-03-08">2016-03-08</time>
-    <a href="/posts/2016-03-08-reduce-in-java-7.html" title="Java 7 中的 Reduce">Java 7 中的 Reduce</a>
-  </li>
+    return ret;
+}
 
-</ul>
+public interface Function&lt;F, T&gt; {
 
-<div id="post-pagination" class="paginator">
-
-  
-    <span class="previous disabled"><前页</span>
-  
-
-      
-      <span class="current-page">1</span>
-      
-
-    
-
-  
-    <span class="next disabled" >后页></span>
-  
-  (共1篇)
+    T apply(F f,
+            T t);
+}
+</code></pre>
 </div>
+
+<p>例子：</p>
+
+<p>数组累加：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>System.out.println(CollectionUtil.reduce(Lists.newArrayList(1, 2, 3).iterator(), 10,
+        new CollectionUtil.Function&lt;Integer, Integer&gt;() {
+    public Integer apply(Integer integer, Integer integer2) {
+        return integer + integer2;
+    }
+}));
+</code></pre>
+</div>
+
+<p>输出：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>16
+</code></pre>
+</div>
+
+<p>数组合并：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>List&lt;ArrayList&lt;Long&gt;&gt; listList = Lists.newArrayList(Lists.newArrayList(1l, 2l), Lists.newArrayList(2l, 3l));
+List&lt;Long&gt; longs = CollectionUtil.reduce(listList.iterator(), new ArrayList&lt;Long&gt;(),
+        new CollectionUtil.Function&lt;ArrayList&lt;Long&gt;, ArrayList&lt;Long&gt;&gt;() {
+    public ArrayList&lt;Long&gt; apply(ArrayList&lt;Long&gt; longs, ArrayList&lt;Long&gt; longs2) {
+        longs2.addAll(longs);
+        return longs2;
+    }
+});
+
+System.out.println(JSON.toJSONString(longs));
+</code></pre>
+</div>
+
+<p>输出：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,2,3]
+</code></pre>
+</div>
+
+
+</section>
+<section class="meta">
+
+<br/>
+<br/>
+<span>
+	<a   class="pageNavInvalid"  >Previous</a>
+	&nbsp;&nbsp;&nbsp;
+	<a   class="pageNavInvalid"  >Next</a>
+</span>
 </section>
 
         </article>
