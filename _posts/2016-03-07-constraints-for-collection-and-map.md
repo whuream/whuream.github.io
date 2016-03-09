@@ -138,3 +138,38 @@ validator:
                     context.unwrap(HibernateConstraintValidatorContext.class).getTimeProvider().getCurrentTime()) == 1;
         }
     }
+
+Example:
+
+    public static class Store{
+
+        @ElementMin(value = 10)
+        @ElementNotNull
+        public List<Long> prices = Lists.newArrayList(100l, 1l, 2l);
+
+        @ElementNotNull
+        public List<String> name = Lists.newArrayList("car", "", null);
+
+        @SecondsFuture
+        public Long shipTime = 1l;
+    }
+
+    @Test
+    public void test(){
+        System.out.println(Joiner.on("\n").join(Iterators.transform(
+                Validation.buildDefaultValidatorFactory().getValidator().validate(new Store()).iterator(),
+                new Function<ConstraintViolation<Store>, String>() {
+                    @Override
+                    public String apply(ConstraintViolation<Store> input) {
+                        return String.format("%s %s %s",
+                                input.getPropertyPath(), JSON.toJSON(input.getInvalidValue()), input.getMessage());
+                    }
+                })));
+
+    }
+
+OutPut:
+
+    prices [100,1,2] must be greater than or equal to 10.0
+    name ["car","",null] may not be null
+    shipTime 1 must be in the future

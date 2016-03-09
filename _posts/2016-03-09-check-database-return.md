@@ -63,6 +63,6 @@ Example:
 Output:
 
     com.ream.www.maventest.utils.DbRetCheck$DatabaseException: db operation failed, ret = 1, expected = 2
-            at com.ream.www.maventest.utils.DbRetCheck.dbRetException(DbRetCheck.java:35)
-            at com.ream.www.maventest.utils.DbRetCheckTest.testDbRetException(DbRetCheckTest.java:13)
+        at com.ream.www.maventest.utils.DbRetCheck.dbRetException(DbRetCheck.java:35)
+        at com.ream.www.maventest.utils.DbRetCheckTest.testDbRetException(DbRetCheckTest.java:13)
     
