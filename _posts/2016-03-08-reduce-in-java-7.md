@@ -1,10 +1,3 @@
----
-layout: post
-
-title: "Java 7 中的 Reduce"
-
----
-
     public static <F, T> T reduce(final Iterator<F> iterator,
                                   final T begin,
                                   final Function<? super F, T> function) {
@@ -18,14 +11,13 @@ title: "Java 7 中的 Reduce"
 
     public interface Function<F, T> {
 
-        T apply(F f,
-                T t);
+        T apply(F f, T t);
     }
 
 
-例子：
+Examples:
 
-数组累加：
+Accumulating lists:
 
     System.out.println(CollectionUtil.reduce(Lists.newArrayList(1, 2, 3).iterator(), 10,
             new CollectionUtil.Function<Integer, Integer>() {
@@ -34,11 +26,11 @@ title: "Java 7 中的 Reduce"
         }
     }));
 
-输出：
+Output:
 
     16
 
-数组合并：
+Concatenating lists:
 
     List<ArrayList<Long>> listList = Lists.newArrayList(Lists.newArrayList(1l, 2l), Lists.newArrayList(2l, 3l));
     List<Long> longs = CollectionUtil.reduce(listList.iterator(), new ArrayList<Long>(),
@@ -51,10 +43,10 @@ title: "Java 7 中的 Reduce"
 
     System.out.println(JSON.toJSONString(longs));
 
-输出：
+Output:
 
     [1,2,2,3]
 
-滥用函数式的例子：
+Example of abuse:
 
 ![](../media/pic/1.pic.jpg)

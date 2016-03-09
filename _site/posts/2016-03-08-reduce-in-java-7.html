@@ -3,7 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="ream" />
-    <title>Java 7 中的 Reduce | ream</title>
+    <title>Reduce In Java 7 | ream</title>
     <link rel="stylesheet" href="/media/css/style.css">
   </head>
 
@@ -37,7 +37,7 @@
     <div id="container">
       <div id="main" role="main">
         <header>
-        <h1>Java 7 中的 Reduce</h1>
+        <h1>Reduce In Java 7</h1>
         </header>
         <nav>
         <span><a title="home page" class="" href="/">Home</a></span>
@@ -59,15 +59,14 @@
 
 public interface Function&lt;F, T&gt; {
 
-    T apply(F f,
-            T t);
+    T apply(F f, T t);
 }
 </code></pre>
 </div>
 
-<p>例子：</p>
+<p>Examples:</p>
 
-<p>数组累加：</p>
+<p>Accumulating lists:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>System.out.println(CollectionUtil.reduce(Lists.newArrayList(1, 2, 3).iterator(), 10,
         new CollectionUtil.Function&lt;Integer, Integer&gt;() {
@@ -78,13 +77,13 @@ public interface Function&lt;F, T&gt; {
 </code></pre>
 </div>
 
-<p>输出：</p>
+<p>Output:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>16
 </code></pre>
 </div>
 
-<p>数组合并：</p>
+<p>Concatenating lists:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>List&lt;ArrayList&lt;Long&gt;&gt; listList = Lists.newArrayList(Lists.newArrayList(1l, 2l), Lists.newArrayList(2l, 3l));
 List&lt;Long&gt; longs = CollectionUtil.reduce(listList.iterator(), new ArrayList&lt;Long&gt;(),
@@ -99,13 +98,13 @@ System.out.println(JSON.toJSONString(longs));
 </code></pre>
 </div>
 
-<p>输出：</p>
+<p>Output:</p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>[1,2,2,3]
 </code></pre>
 </div>
 
-<p>滥用函数式的例子：</p>
+<p>Example of abuse:</p>
 
 <p><img src="../media/pic/1.pic.jpg" alt="" /></p>
 
@@ -115,9 +114,9 @@ System.out.println(JSON.toJSONString(longs));
 <br/>
 <br/>
 <span>
-	<a   class="pageNavInvalid"  >Previous</a>
+	<a  href="/posts/2016-03-07-constraints-for-collection-and-map.html" class="pageNav"  >Previous</a>
 	&nbsp;&nbsp;&nbsp;
-	<a  href="/posts/2016-03-09-dbret-check.html" class="pageNav"  >Next</a>
+	<a  href="/posts/2016-03-09-check-database-return.html" class="pageNav"  >Next</a>
 </span>
 </section>
 

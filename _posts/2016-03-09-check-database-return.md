@@ -1,10 +1,3 @@
----
-layout: post
-
-title: "Java检查数据库返回值的通用方法"
-
----
-
     public static class DatabaseException extends RuntimeException{
         private static final long serialVersionUID = -8768685827964066080L;
 
@@ -61,13 +54,13 @@ title: "Java检查数据库返回值的通用方法"
         }
     }
 
-例子：
+Example:
 
     Long dbRet = 1l;
 
     DbRetCheck.dbRetException(dbRet, 2l, DbRetCheck.CompareTypeEnum.EQUAL);
 
-输出：
+Output:
 
     com.ream.www.maventest.utils.DbRetCheck$DatabaseException: db operation failed, ret = 1, expected = 2
             at com.ream.www.maventest.utils.DbRetCheck.dbRetException(DbRetCheck.java:35)
