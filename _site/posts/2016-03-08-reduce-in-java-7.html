@@ -142,6 +142,25 @@ System.out.println(JSON.toJSONString(retList));
 </code></pre>
 </div>
 
+<p>Python 3:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>list_long = [1, 2, 3, 4]
+
+print(functools.reduce(lambda a, b: a + b, list_long, 100))
+
+lists = [[1, 2, 3], [4, 5, 6]]
+
+print(functools.reduce(lambda a, b: a + b, lists, []))
+</code></pre>
+</div>
+
+<p>Output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>110
+[1, 2, 3, 4, 5, 6]
+</code></pre>
+</div>
+
 <p>Example of abuse:</p>
 
 <p><img src="../media/pic/1.pic.jpg" alt="" /></p>

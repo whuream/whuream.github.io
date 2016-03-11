@@ -76,6 +76,21 @@ Concatenating lists:
 Output:
 
     [1,2,3,4,5,6]
+    
+Python 3:
+
+    list_long = [1, 2, 3, 4]
+    
+    print(functools.reduce(lambda a, b: a + b, list_long, 100))
+    
+    lists = [[1, 2, 3], [4, 5, 6]]
+    
+    print(functools.reduce(lambda a, b: a + b, lists, []))
+    
+Output:
+
+    110
+    [1, 2, 3, 4, 5, 6]
 
 
 Example of abuse:
