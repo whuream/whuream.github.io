@@ -104,6 +104,44 @@ System.out.println(JSON.toJSONString(longs));
 </code></pre>
 </div>
 
+<p>Java 8:</p>
+
+<p>Accumulating lists:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>List&lt;Long&gt; longs = Lists.newArrayList(1l, 2l, 3l, 4l);
+
+Long ret = longs.stream().reduce(100l, (a, b) -&gt; a + b);
+
+System.out.println(ret);
+</code></pre>
+</div>
+
+<p>Output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>110
+</code></pre>
+</div>
+
+<p>Concatenating lists:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>List&lt;ArrayList&lt;Long&gt;&gt; lists = Lists.newArrayList(Lists.newArrayList(1l, 2l, 3l),
+        Lists.newArrayList(4l, 5l, 6l));
+
+List&lt;Long&gt; retList = lists.stream().reduce(new ArrayList&lt;Long&gt;(), (longs1, longs2) -&gt; {
+    longs1.addAll(longs2);
+    return longs1;
+});
+
+System.out.println(JSON.toJSONString(retList));
+</code></pre>
+</div>
+
+<p>Output:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[1,2,3,4,5,6]
+</code></pre>
+</div>
+
 <p>Example of abuse:</p>
 
 <p><img src="../media/pic/1.pic.jpg" alt="" /></p>
