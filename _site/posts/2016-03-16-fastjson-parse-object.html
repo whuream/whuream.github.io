@@ -48,50 +48,90 @@
         <article class="content">
         <section class="post">
 <p>1.如果目标类不是泛型，使用方法：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public static &lt;T&gt; T parseObject(String text, Class&lt;T&gt; clazz)
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static &lt;T&gt; T parseObject(String text, Class&lt;T&gt; clazz)
+</code></pre>
+</div>
+
 <p>如：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">C1 c2 = JSON.parseObject(string, C1.class);
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>C1 c2 = JSON.parseObject(string, C1.class);
+</code></pre>
+</div>
+
 <p>或者使用方法：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public static &lt;T&gt; T parseObject(String text, TypeReference&lt;T&gt; type, Feature... features)
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static &lt;T&gt; T parseObject(String text, TypeReference&lt;T&gt; type, Feature... features)
+</code></pre>
+</div>
+
 <p>如：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">C1 c4 = JSON.parseObject(string, new TypeReference&lt;C1&gt;(){});
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>C1 c4 = JSON.parseObject(string, new TypeReference&lt;C1&gt;(){});
+</code></pre>
+</div>
+
 <p>或者使用方法：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public static &lt;T&gt; T parseObject(String input, Type clazz, Feature... features)
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static &lt;T&gt; T parseObject(String input, Type clazz, Feature... features)
+</code></pre>
+</div>
+
 <p>如：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">C1 c3 = JSON.parseObject(string, new TypeToken&lt;C1&gt;(){}.getType());
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>C1 c3 = JSON.parseObject(string, new TypeToken&lt;C1&gt;(){}.getType());
+</code></pre>
+</div>
+
 <p>2.如果目标类是泛型，使用方法：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public static &lt;T&gt; T parseObject(String text, TypeReference&lt;T&gt; type, Feature... features)
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static &lt;T&gt; T parseObject(String text, TypeReference&lt;T&gt; type, Feature... features)
+</code></pre>
+</div>
+
 <p>如：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">C2&lt;C1&gt; c1C21 = JSON.parseObject(string, new TypeReference&lt;C2&lt;C1&gt;&gt;(){});
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>C2&lt;C1&gt; c1C21 = JSON.parseObject(string, new TypeReference&lt;C2&lt;C1&gt;&gt;(){});
+</code></pre>
+</div>
+
 <p>或者使用方法：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public static &lt;T&gt; T parseObject(String input, Type clazz, Feature... features)
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static &lt;T&gt; T parseObject(String input, Type clazz, Feature... features)
+</code></pre>
+</div>
+
 <p>如：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">C2&lt;C1&gt; c1C22 = JSON.parseObject(string, new TypeToken&lt;C2&lt;C1&gt;&gt;(){}.getType());
-</code></pre></div>
-<p>其中，<code>new TypeToken&lt;C2&lt;C1&gt;&gt;(){}</code>与<code>new TypeReference&lt;C2&lt;C1&gt;&gt;(){}</code>原理类似，通过构造匿名子类来继承特定的泛型模板，然后在子类中使用</p>
-<div class="highlight"><pre><code class="language-" data-lang="">Type[] types = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments;
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>C2&lt;C1&gt; c1C22 = JSON.parseObject(string, new TypeToken&lt;C2&lt;C1&gt;&gt;(){}.getType());
+</code></pre>
+</div>
+
+<p>其中，<code class="highlighter-rouge">new TypeToken&lt;C2&lt;C1&gt;&gt;(){}</code>与<code class="highlighter-rouge">new TypeReference&lt;C2&lt;C1&gt;&gt;(){}</code>原理类似，通过构造匿名子类来继承特定的泛型模板，然后在子类中使用</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Type[] types = ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments;
+</code></pre>
+</div>
+
 <p>来获取子类中的泛型模板名称。</p>
 
-<p>而<code>com.google.common.reflect.TypeToken</code>的功能更为强大，可以动态构造Type:</p>
+<p>而<code class="highlighter-rouge">com.google.common.reflect.TypeToken</code>的功能更为强大，可以动态构造Type:</p>
 
 <p>使用方法：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public final &lt;X&gt; TypeToken&lt;T&gt; where(TypeParameter&lt;X&gt; typeParam, Class&lt;X&gt; typeArg)
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public final &lt;X&gt; TypeToken&lt;T&gt; where(TypeParameter&lt;X&gt; typeParam, Class&lt;X&gt; typeArg)
+</code></pre>
+</div>
+
 <p>或：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public final &lt;X&gt; TypeToken&lt;T&gt; where(TypeParameter&lt;X&gt; typeParam, TypeToken&lt;X&gt; typeArg)
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public final &lt;X&gt; TypeToken&lt;T&gt; where(TypeParameter&lt;X&gt; typeParam, TypeToken&lt;X&gt; typeArg)
+</code></pre>
+</div>
+
 <p>如：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Test
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@Test
 public void test4(){
     Type type = mapType(new TypeToken&lt;C2&lt;C1&gt;&gt;(){}, C1.class);
     System.out.println(type);
@@ -102,10 +142,16 @@ static &lt;K, V&gt; Type mapType(TypeToken&lt;K&gt; k, Class&lt;V&gt; v) {
             .where(new TypeParameter&lt;K&gt;() {}, k)
             .where(new TypeParameter&lt;V&gt;() {}, v).getType();
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>输出：</p>
-<div class="highlight"><pre><code class="language-" data-lang="">java.util.Map&lt;FastJsonTest.FastJsonTest$C2&lt;FastJsonTest$C1&gt;, FastJsonTest$C1&gt;
-</code></pre></div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>java.util.Map&lt;FastJsonTest.FastJsonTest$C2&lt;FastJsonTest$C1&gt;, FastJsonTest$C1&gt;
+</code></pre>
+</div>
+
+
 </section>
 <section class="meta">
 

@@ -50,7 +50,8 @@
 <p>1. ElementMin:</p>
 
 <p>constraint:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Retention(RetentionPolicy.RUNTIME)
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@Retention(RetentionPolicy.RUNTIME)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Constraint(validatedBy = ElementMinValidator.class)
 @Documented
@@ -66,9 +67,12 @@ public @interface ElementMin {
      */
     double value();
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>validator:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public class ElementMinValidator implements ConstraintValidator&lt;ElementMin, Object&gt; {
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class ElementMinValidator implements ConstraintValidator&lt;ElementMin, Object&gt; {
     private BigDecimal value;
 
     @Override
@@ -102,11 +106,14 @@ public @interface ElementMin {
         return false;
     }
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>2. ElementNotNull:</p>
 
 <p>constraint:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Retention(RetentionPolicy.RUNTIME)
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@Retention(RetentionPolicy.RUNTIME)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Constraint(validatedBy = ElementNotNullValidator.class)
 @Documented
@@ -117,9 +124,12 @@ public @interface ElementNotNull {
 
     Class&lt;? extends Payload&gt;[] payload() default{};
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>validator:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public class ElementNotNullValidator implements ConstraintValidator&lt;ElementNotNull, Object&gt;{
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class ElementNotNullValidator implements ConstraintValidator&lt;ElementNotNull, Object&gt;{
 
     @Override
     public void initialize(ElementNotNull constraintAnnotation) {
@@ -147,11 +157,14 @@ public @interface ElementNotNull {
             return value instanceof Map &amp;&amp; isValidCollection(((Map) value).values());
     }
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>3. SecondsFuture:</p>
 
 <p>constraint:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">@Retention(RetentionPolicy.RUNTIME)
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@Retention(RetentionPolicy.RUNTIME)
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Constraint(validatedBy = SecondsFutureValidator.class)
 @Documented
@@ -163,9 +176,12 @@ public @interface SecondsFuture {
     Class&lt;? extends Payload&gt;[] payload() default { };
 
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>validator:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public class SecondsFutureValidator implements ConstraintValidator&lt;SecondsFuture, Object&gt; {
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public class SecondsFutureValidator implements ConstraintValidator&lt;SecondsFuture, Object&gt; {
 
     @Override
     public void initialize(SecondsFuture constraintAnnotation) {
@@ -181,9 +197,12 @@ public @interface SecondsFuture {
                 context.unwrap(HibernateConstraintValidatorContext.class).getTimeProvider().getCurrentTime()) == 1;
     }
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Example:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">public static class Store{
+
+<div class="highlighter-rouge"><pre class="highlight"><code>public static class Store{
 
     @ElementMin(value = 10)
     @ElementNotNull
@@ -209,12 +228,17 @@ public void test(){
             })));
 
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>OutPut:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">prices [100,1,2] must be greater than or equal to 10.0
+
+<div class="highlighter-rouge"><pre class="highlight"><code>prices [100,1,2] must be greater than or equal to 10.0
 name ["car","",null] may not be null
 shipTime 1 must be in the future
-</code></pre></div>
+</code></pre>
+</div>
+
 </section>
 <section class="meta">
 

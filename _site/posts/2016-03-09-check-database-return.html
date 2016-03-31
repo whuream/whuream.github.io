@@ -47,7 +47,7 @@
         </nav>
         <article class="content">
         <section class="post">
-<div class="highlight"><pre><code class="language-" data-lang="">public static class DatabaseException extends RuntimeException{
+<div class="highlighter-rouge"><pre class="highlight"><code>public static class DatabaseException extends RuntimeException{
     private static final long serialVersionUID = -8768685827964066080L;
 
     DatabaseException(String msg){
@@ -102,17 +102,26 @@ public enum CompareTypeEnum {
         this.value = value;
     }
 }
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Example:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">Long dbRet = 1l;
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Long dbRet = 1l;
 
 DbRetCheck.dbRetException(dbRet, 2l, DbRetCheck.CompareTypeEnum.EQUAL);
-</code></pre></div>
+</code></pre>
+</div>
+
 <p>Output:</p>
-<div class="highlight"><pre><code class="language-" data-lang="">com.ream.www.maventest.utils.DbRetCheck$DatabaseException: db operation failed, ret = 1, expected = 2
+
+<div class="highlighter-rouge"><pre class="highlight"><code>com.ream.www.maventest.utils.DbRetCheck$DatabaseException: db operation failed, ret = 1, expected = 2
     at com.ream.www.maventest.utils.DbRetCheck.dbRetException(DbRetCheck.java:35)
     at com.ream.www.maventest.utils.DbRetCheckTest.testDbRetException(DbRetCheckTest.java:13)
-</code></pre></div>
+</code></pre>
+</div>
+
+
 </section>
 <section class="meta">
 
