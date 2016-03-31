@@ -183,18 +183,18 @@ public interface BiFunction<T, U, R> {
 
 ```java
 public class Zip {
-    public static <T, U, R> Iterator<R> zip(final Iterator<? extends T> iterator1, final Iterator<? extends U> iterator2,
+    public static <T, U, R> Iterator<R> zip(final Iterator<? extends T> iteratorT, final Iterator<? extends U> iteratorU,
                                   final BiFunction<? super T, ? super U, ? extends R> function){
 
         return new Iterator<R>() {
             @Override
             public boolean hasNext() {
-                return iterator1.hasNext() && iterator2.hasNext();
+                return iteratorT.hasNext() && iteratorU.hasNext();
             }
 
             @Override
             public R next() {
-                return function.apply(iterator1.next(), iterator2.next());
+                return function.apply(iteratorT.next(), iteratorU.next());
             }
         };
     }
@@ -272,38 +272,39 @@ System.out.println(Stream.of(1, 2, 3).reduce(0l, (aLong, integer) -> aLong + int
 
 ```java
 public class ZipJ8 {
-    public static <T, U, R> Stream<R> zip(Stream<? extends T> streamA, Stream<? extends U> streamB,
-                                          BiFunction<? super T, ? super U, ? extends R> biFunction) {
+    public static <T, U, R> Stream<R> zip(final Stream<? extends T> streamT, final Stream<? extends U> streamU,
+                                          final BiFunction<? super T, ? super U, ? extends R> biFunction) {
         Objects.requireNonNull(biFunction);
-        @SuppressWarnings("unchecked")
-        Spliterator<T> spliteratorA = (Spliterator<T>) Objects.requireNonNull(streamA).spliterator();
-        @SuppressWarnings("unchecked")
-        Spliterator<U> spliteratorB = (Spliterator<U>) Objects.requireNonNull(streamB).spliterator();
+        Objects.requireNonNull(streamT);
+        Objects.requireNonNull(streamU);
+
+        Spliterator<? extends T> spliteratorT = streamT.spliterator();
+        Spliterator<? extends U> spliteratorU = streamU.spliterator();
 
         // Zipping looses DISTINCT and SORTED characteristics
-        int characteristics = spliteratorA.characteristics() & spliteratorB.characteristics() &
+        int characteristics = spliteratorT.characteristics() & spliteratorU.characteristics() &
                 ~(Spliterator.DISTINCT | Spliterator.SORTED);
 
         long zipSize = ((characteristics & Spliterator.SIZED) != 0)
-                ? Math.min(spliteratorA.getExactSizeIfKnown(), spliteratorB.getExactSizeIfKnown())
+                ? Math.min(spliteratorT.getExactSizeIfKnown(), spliteratorU.getExactSizeIfKnown())
                 : -1;
 
-        Iterator<T> iteratorA = Spliterators.iterator(spliteratorA);
-        Iterator<U> iteratorB = Spliterators.iterator(spliteratorB);
-        Iterator<R> iteratorC = new Iterator<R>() {
+        Iterator<T> iteratorT = Spliterators.iterator(spliteratorT);
+        Iterator<U> iteratorU = Spliterators.iterator(spliteratorU);
+        Iterator<R> iteratorR = new Iterator<R>() {
             @Override
             public boolean hasNext() {
-                return iteratorA.hasNext() && iteratorB.hasNext();
+                return iteratorT.hasNext() && iteratorU.hasNext();
             }
 
             @Override
             public R next() {
-                return biFunction.apply(iteratorA.next(), iteratorB.next());
+                return biFunction.apply(iteratorT.next(), iteratorU.next());
             }
         };
 
-        Spliterator<R> split = Spliterators.spliterator(iteratorC, zipSize, characteristics);
-        return (streamA.isParallel() || streamB.isParallel())
+        Spliterator<R> split = Spliterators.spliterator(iteratorR, zipSize, characteristics);
+        return (streamT.isParallel() || streamU.isParallel())
                 ? StreamSupport.stream(split, true)
                 : StreamSupport.stream(split, false);
     }
