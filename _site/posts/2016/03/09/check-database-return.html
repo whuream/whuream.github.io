@@ -47,80 +47,84 @@
         </nav>
         <article class="content">
         <section class="post">
-<div class="highlighter-rouge"><pre class="highlight"><code>public static class DatabaseException extends RuntimeException{
-    private static final long serialVersionUID = -8768685827964066080L;
+<p>用来快速检查数据库的返回值。</p>
 
-    DatabaseException(String msg){
-        super(msg);
-    }
-}
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DbRetCheck</span> <span class="o">{</span>
 
-public static &lt;T extends Comparable&lt;T&gt;&gt; void dbRetException(T ret, T expected, CompareTypeEnum compareTypeEnum){
-    Boolean checkStatus = false;
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">DatabaseException</span> <span class="kd">extends</span> <span class="n">RuntimeException</span> <span class="o">{</span>
+        <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">serialVersionUID</span> <span class="o">=</span> <span class="o">-</span><span class="mi">8768685827964066080L</span><span class="o">;</span>
 
-    if(compareTypeEnum.equals(CompareTypeEnum.EQUAL)){
-        checkStatus = ret.equals(expected);
-    }else if (compareTypeEnum.equals(CompareTypeEnum.GREATER)){
-        checkStatus = ret.compareTo(expected) == 1;
-    }else if (compareTypeEnum.equals(CompareTypeEnum.LESS)){
-        checkStatus = ret.compareTo(expected) == -1;
-    }else if(compareTypeEnum.equals(CompareTypeEnum.GREATER_EQUAL)){
-        checkStatus = ret.compareTo(expected) &gt; -1;
-    }else if(compareTypeEnum.equals(CompareTypeEnum.LESS_EQUAL)){
-        checkStatus = ret.compareTo(expected) &lt; 1;
-    }
+        <span class="n">DatabaseException</span><span class="o">(</span><span class="n">String</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-    String msg = String.format("db operation failed, ret = %s, expected %s %s", ret.toString(),
-            compareTypeEnum.getValue(), expected.toString());
+    <span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">Comparable</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="kt">void</span> <span class="n">dbRetException</span><span class="o">(</span><span class="n">T</span> <span class="n">ret</span><span class="o">,</span> <span class="n">T</span> <span class="n">expected</span><span class="o">,</span> <span class="n">CompareTypeEnum</span> <span class="n">compareTypeEnum</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Boolean</span> <span class="n">checkStatus</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
 
-    if(!checkStatus){
-        throw new DatabaseException(msg);
-    }
+        <span class="k">if</span> <span class="o">(</span><span class="n">compareTypeEnum</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">CompareTypeEnum</span><span class="o">.</span><span class="na">EQUAL</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">checkStatus</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">expected</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">compareTypeEnum</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">CompareTypeEnum</span><span class="o">.</span><span class="na">GREATER</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">checkStatus</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">expected</span><span class="o">)</span> <span class="o">==</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">compareTypeEnum</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">CompareTypeEnum</span><span class="o">.</span><span class="na">LESS</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">checkStatus</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">expected</span><span class="o">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">compareTypeEnum</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">CompareTypeEnum</span><span class="o">.</span><span class="na">GREATER_EQUAL</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">checkStatus</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">expected</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">compareTypeEnum</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">CompareTypeEnum</span><span class="o">.</span><span class="na">LESS_EQUAL</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">checkStatus</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">expected</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span>
 
-}
+        <span class="n">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"db operation failed, ret = %s, expected %s %s"</span><span class="o">,</span> <span class="n">ret</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span>
+                <span class="n">compareTypeEnum</span><span class="o">.</span><span class="na">getValue</span><span class="o">(),</span> <span class="n">expected</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
 
-public enum CompareTypeEnum {
+        <span class="k">if</span> <span class="o">(!</span><span class="n">checkStatus</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="n">DatabaseException</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+        <span class="o">}</span>
 
-    EQUAL("="),
-    GREATER("&gt;"),
-    LESS("&lt;"),
-    GREATER_EQUAL("&gt;="),
-    LESS_EQUAL("&lt;=")
-    ;
+    <span class="o">}</span>
 
-    CompareTypeEnum(String value){
-        this.value = value;
-    }
+    <span class="kd">public</span> <span class="kd">enum</span> <span class="n">CompareTypeEnum</span> <span class="o">{</span>
 
-    private String value;
+        <span class="n">EQUAL</span><span class="o">(</span><span class="s">"="</span><span class="o">),</span>
+        <span class="n">GREATER</span><span class="o">(</span><span class="s">"&gt;"</span><span class="o">),</span>
+        <span class="n">LESS</span><span class="o">(</span><span class="s">"&lt;"</span><span class="o">),</span>
+        <span class="n">GREATER_EQUAL</span><span class="o">(</span><span class="s">"&gt;="</span><span class="o">),</span>
+        <span class="n">LESS_EQUAL</span><span class="o">(</span><span class="s">"&lt;="</span><span class="o">);</span>
 
-    public String getValue() {
-        return value;
-    }
+        <span class="n">CompareTypeEnum</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+        <span class="o">}</span>
 
-    public void setValue(String value) {
-        this.value = value;
-    }
-}
+        <span class="kd">private</span> <span class="n">String</span> <span class="n">value</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="n">String</span> <span class="n">getValue</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kt">void</span> <span class="n">setValue</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre>
 </div>
 
 <p>Example:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>Long dbRet = 1l;
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="n">Long</span> <span class="n">dbRet</span> <span class="o">=</span> <span class="mi">1</span><span class="n">l</span><span class="o">;</span>
 
-DbRetCheck.dbRetException(dbRet, 2l, DbRetCheck.CompareTypeEnum.EQUAL);
+<span class="n">DbRetCheck</span><span class="o">.</span><span class="na">dbRetException</span><span class="o">(</span><span class="n">dbRet</span><span class="o">,</span> <span class="mi">2</span><span class="n">l</span><span class="o">,</span> <span class="n">DbRetCheck</span><span class="o">.</span><span class="na">CompareTypeEnum</span><span class="o">.</span><span class="na">EQUAL</span><span class="o">);</span>
 </code></pre>
 </div>
 
 <p>Output:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>com.ream.www.maventest.utils.DbRetCheck$DatabaseException: db operation failed, ret = 1, expected = 2
-    at com.ream.www.maventest.utils.DbRetCheck.dbRetException(DbRetCheck.java:35)
-    at com.ream.www.maventest.utils.DbRetCheckTest.testDbRetException(DbRetCheckTest.java:13)
+<div class="highlighter-rouge"><pre class="highlight"><code>me.sutong.java.tools.DbRetCheck$DatabaseException: db operation failed, ret = 1, expected = 2
+	at me.sutong.java.tools.DbRetCheck.dbRetException(DbRetCheck.java:35)
+	at me.sutong.java.tools.DbRetCheckTest.testDbRetException(DbRetCheckTest.java:16)
+	...
 </code></pre>
 </div>
-
 
 </section>
 <section class="meta">
