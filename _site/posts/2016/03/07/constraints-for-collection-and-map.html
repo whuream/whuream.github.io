@@ -47,195 +47,243 @@
         </nav>
         <article class="content">
         <section class="post">
-<p>1. ElementMin:</p>
+<p><code class="highlighter-rouge">javax.validation.constraints</code>中提供了针对基本类型参数的取值检查，但是没有针对列表的检查。</p>
 
-<p>constraint:</p>
+<ol>
+  <li>
+    <p><code class="highlighter-rouge">ElementMin</code></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>@Retention(RetentionPolicy.RUNTIME)
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
-@Constraint(validatedBy = ElementMinValidator.class)
-@Documented
-public @interface ElementMin {
-    String message() default "{javax.validation.constraints.Min.message}";
+    <p>constraint:</p>
 
-    Class&lt;?&gt;[] groups() default { };
-
-    Class&lt;? extends Payload&gt;[] payload() default { };
-
-    /**
+    <div class="highlighter-rouge"><pre class="highlight"><code><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="nd">@Target</span><span class="o">({</span><span class="n">METHOD</span><span class="o">,</span> <span class="n">FIELD</span><span class="o">,</span> <span class="n">ANNOTATION_TYPE</span><span class="o">,</span> <span class="n">CONSTRUCTOR</span><span class="o">,</span> <span class="n">PARAMETER</span><span class="o">})</span>
+<span class="nd">@Constraint</span><span class="o">(</span><span class="n">validatedBy</span> <span class="o">=</span> <span class="n">ElementMinValidator</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@Documented</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">ElementMin</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">"{javax.validation.constraints.Min.message}"</span><span class="o">;</span>
+    
+    <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+    
+    <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Payload</span><span class="o">&gt;[]</span> <span class="n">payload</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+    
+    <span class="cm">/**
      * @return value the element must be higher or equal to
-     */
-    double value();
-}
+     */</span>
+    <span class="n">String</span> <span class="n">value</span><span class="o">();</span>
+<span class="o">}</span>
 </code></pre>
-</div>
+    </div>
 
-<p>validator:</p>
+    <p>validator:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>public class ElementMinValidator implements ConstraintValidator&lt;ElementMin, Object&gt; {
-    private BigDecimal value;
-
-    @Override
-    public void initialize(ElementMin constraintAnnotation) {
-        this.value = BigDecimal.valueOf(constraintAnnotation.value());
-    }
-
-    private Boolean isValidCollection(Collection collection){
-        for(Object item: collection){
-            BigDecimal itemValue = new BigDecimal(item.toString());
-
-            if(itemValue.compareTo(this.value) == -1){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public boolean isValid(Object value, ConstraintValidatorContext context) {
-        if(value == null){
-            return true;
-        }
-        if(value instanceof Collection){
-            return isValidCollection((Collection)value);
-        }
-        if(value instanceof Map){
-            return isValidCollection(((Map) value).values());
-        }
-
-        return false;
-    }
-}
+    <div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ElementMinValidator</span> <span class="kd">implements</span> <span class="n">ConstraintValidator</span><span class="o">&lt;</span><span class="n">ElementMin</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">BigDecimal</span> <span class="n">value</span><span class="o">;</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">initialize</span><span class="o">(</span><span class="n">ElementMin</span> <span class="n">constraintAnnotation</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="n">constraintAnnotation</span><span class="o">.</span><span class="na">value</span><span class="o">());</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="n">Boolean</span> <span class="n">isValidCollection</span><span class="o">(</span><span class="n">Collection</span> <span class="n">collection</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Object</span> <span class="n">item</span> <span class="o">:</span> <span class="n">collection</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">BigDecimal</span> <span class="n">itemValue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BigDecimal</span><span class="o">(</span><span class="n">item</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+    
+            <span class="k">if</span> <span class="o">(</span><span class="n">itemValue</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">value</span><span class="o">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">isValid</span><span class="o">(</span><span class="n">Object</span> <span class="n">value</span><span class="o">,</span> <span class="n">ConstraintValidatorContext</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="k">instanceof</span> <span class="n">Collection</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">isValidCollection</span><span class="o">((</span><span class="n">Collection</span><span class="o">)</span> <span class="n">value</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="k">instanceof</span> <span class="n">Map</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">isValidCollection</span><span class="o">(((</span><span class="n">Map</span><span class="o">)</span> <span class="n">value</span><span class="o">).</span><span class="na">values</span><span class="o">());</span>
+        <span class="o">}</span>
+    
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre>
-</div>
+    </div>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">ElementNotNull</code></p>
 
-<p>2. ElementNotNull:</p>
+    <p>constraint:</p>
 
-<p>constraint:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>@Retention(RetentionPolicy.RUNTIME)
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
-@Constraint(validatedBy = ElementNotNullValidator.class)
-@Documented
-public @interface ElementNotNull {
-    String message() default "{javax.validation.constraints.NotNull.message}";
-
-    Class&lt;?&gt;[] groups() default {};
-
-    Class&lt;? extends Payload&gt;[] payload() default{};
-}
+    <div class="highlighter-rouge"><pre class="highlight"><code><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="nd">@Target</span><span class="o">({</span><span class="n">METHOD</span><span class="o">,</span> <span class="n">FIELD</span><span class="o">,</span> <span class="n">ANNOTATION_TYPE</span><span class="o">,</span> <span class="n">CONSTRUCTOR</span><span class="o">,</span> <span class="n">PARAMETER</span><span class="o">})</span>
+<span class="nd">@Constraint</span><span class="o">(</span><span class="n">validatedBy</span> <span class="o">=</span> <span class="n">ElementNotNullValidator</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@Documented</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">ElementNotNull</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">"{javax.validation.constraints.NotNull.message}"</span><span class="o">;</span>
+    
+    <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+    
+    <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Payload</span><span class="o">&gt;[]</span> <span class="n">payload</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+<span class="o">}</span>
 </code></pre>
-</div>
+    </div>
 
-<p>validator:</p>
+    <p>validator:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>public class ElementNotNullValidator implements ConstraintValidator&lt;ElementNotNull, Object&gt;{
+    <p>public class ElementNotNullValidator implements ConstraintValidator&lt;ElementNotNull, Object&gt;{</p>
 
-    @Override
-    public void initialize(ElementNotNull constraintAnnotation) {
-
-    }
-
-    private boolean isValidCollection(Collection value){
-        for(Object item: value){
-            if(item == null){
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public boolean isValid(Object value, ConstraintValidatorContext context) {
-        if(value == null){
-            return true;
-        }
-
-        if (value instanceof Collection) {
-            return isValidCollection((Collection) value);
-        } else
-            return value instanceof Map &amp;&amp; isValidCollection(((Map) value).values());
-    }
-}
+    <div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ElementNotNullValidator</span> <span class="kd">implements</span> <span class="n">ConstraintValidator</span><span class="o">&lt;</span><span class="n">ElementNotNull</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="o">{</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">initialize</span><span class="o">(</span><span class="n">ElementNotNull</span> <span class="n">constraintAnnotation</span><span class="o">)</span> <span class="o">{</span>
+    
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">isValidCollection</span><span class="o">(</span><span class="n">Collection</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Object</span> <span class="n">item</span> <span class="o">:</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">item</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">isValid</span><span class="o">(</span><span class="n">Object</span> <span class="n">value</span><span class="o">,</span> <span class="n">ConstraintValidatorContext</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="k">instanceof</span> <span class="n">Collection</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">isValidCollection</span><span class="o">((</span><span class="n">Collection</span><span class="o">)</span> <span class="n">value</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span>
+            <span class="k">return</span> <span class="n">value</span> <span class="k">instanceof</span> <span class="n">Map</span> <span class="o">&amp;&amp;</span> <span class="n">isValidCollection</span><span class="o">(((</span><span class="n">Map</span><span class="o">)</span> <span class="n">value</span><span class="o">).</span><span class="na">values</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre>
-</div>
+    </div>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">SecondsFuture</code></p>
 
-<p>3. SecondsFuture:</p>
+    <p>constraint:</p>
 
-<p>constraint:</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code>@Retention(RetentionPolicy.RUNTIME)
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
-@Constraint(validatedBy = SecondsFutureValidator.class)
-@Documented
-public @interface SecondsFuture {
-    String message() default "{javax.validation.constraints.Future.message}";
-
-    Class&lt;?&gt;[] groups() default { };
-
-    Class&lt;? extends Payload&gt;[] payload() default { };
-
-}
+    <div class="highlighter-rouge"><pre class="highlight"><code><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="nd">@Target</span><span class="o">({</span><span class="n">METHOD</span><span class="o">,</span> <span class="n">FIELD</span><span class="o">,</span> <span class="n">ANNOTATION_TYPE</span><span class="o">,</span> <span class="n">CONSTRUCTOR</span><span class="o">,</span> <span class="n">PARAMETER</span><span class="o">})</span>
+<span class="nd">@Constraint</span><span class="o">(</span><span class="n">validatedBy</span> <span class="o">=</span> <span class="n">SecondsFutureValidator</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@Documented</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">SecondsFuture</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">"{javax.validation.constraints.Future.message}"</span><span class="o">;</span>
+    
+    <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+    
+    <span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">Payload</span><span class="o">&gt;[]</span> <span class="n">payload</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+    
+<span class="o">}</span>
 </code></pre>
-</div>
+    </div>
 
-<p>validator:</p>
+    <p>validator:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>public class SecondsFutureValidator implements ConstraintValidator&lt;SecondsFuture, Object&gt; {
+    <p>public class SecondsFutureValidator implements ConstraintValidator&lt;SecondsFuture, Object&gt; {</p>
 
-    @Override
-    public void initialize(SecondsFuture constraintAnnotation) {
-    }
-
-    @Override
-    public boolean isValid(Object value, ConstraintValidatorContext context) {
-        if (value == null){
-            return true;
-        }
-
-        return Long.valueOf(value.toString()).compareTo(
-                context.unwrap(HibernateConstraintValidatorContext.class).getTimeProvider().getCurrentTime()) == 1;
-    }
-}
+    <div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecondsFutureValidator</span> <span class="kd">implements</span> <span class="n">ConstraintValidator</span><span class="o">&lt;</span><span class="n">SecondsFuture</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="o">{</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">initialize</span><span class="o">(</span><span class="n">SecondsFuture</span> <span class="n">constraintAnnotation</span><span class="o">)</span> <span class="o">{</span>
+    <span class="o">}</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">isValid</span><span class="o">(</span><span class="n">Object</span> <span class="n">value</span><span class="o">,</span> <span class="n">ConstraintValidatorContext</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">value</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="k">return</span> <span class="n">Long</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">value</span><span class="o">.</span><span class="na">toString</span><span class="o">()).</span><span class="na">compareTo</span><span class="o">(</span>
+                <span class="n">context</span><span class="o">.</span><span class="na">unwrap</span><span class="o">(</span><span class="n">HibernateConstraintValidatorContext</span><span class="o">.</span><span class="na">class</span><span class="o">).</span><span class="na">getTimeProvider</span><span class="o">().</span><span class="na">getCurrentTime</span><span class="o">())</span> <span class="o">==</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre>
-</div>
+    </div>
+  </li>
+</ol>
 
 <p>Example:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>public static class Store{
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConstraintTest</span> <span class="o">{</span>
 
-    @ElementMin(value = 10)
-    @ElementNotNull
-    public List&lt;Long&gt; prices = Lists.newArrayList(100l, 1l, 2l);
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Students</span> <span class="o">{</span>
+        <span class="nd">@ElementMin</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"0"</span><span class="o">)</span>
+        <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="n">ages</span><span class="o">;</span>
 
-    @ElementNotNull
-    public List&lt;String&gt; name = Lists.newArrayList("car", "", null);
+        <span class="nd">@ElementNotNull</span>
+        <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">;</span>
 
-    @SecondsFuture
-    public Long shipTime = 1l;
-}
+        <span class="nd">@SecondsFuture</span>
+        <span class="kd">private</span> <span class="n">Long</span> <span class="n">future</span><span class="o">;</span>
 
-@Test
-public void test(){
-    System.out.println(Joiner.on("\n").join(Iterators.transform(
-            Validation.buildDefaultValidatorFactory().getValidator().validate(new Store()).iterator(),
-            new Function&lt;ConstraintViolation&lt;Store&gt;, String&gt;() {
-                @Override
-                public String apply(ConstraintViolation&lt;Store&gt; input) {
-                    return String.format("%s %s %s",
-                            input.getPropertyPath(), JSON.toJSON(input.getInvalidValue()), input.getMessage());
-                }
-            })));
+        <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="n">getAges</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">ages</span><span class="o">;</span>
+        <span class="o">}</span>
 
-}
+        <span class="kd">public</span> <span class="kt">void</span> <span class="n">setAges</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="n">ages</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">ages</span> <span class="o">=</span> <span class="n">ages</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">getNames</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">names</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kt">void</span> <span class="n">setNames</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">names</span> <span class="o">=</span> <span class="n">names</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="n">Long</span> <span class="n">getFuture</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">future</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kt">void</span> <span class="n">setFuture</span><span class="o">(</span><span class="n">Long</span> <span class="n">future</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">future</span> <span class="o">=</span> <span class="n">future</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="n">Students</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;</span> <span class="n">ages</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">names</span><span class="o">,</span> <span class="n">Long</span> <span class="n">future</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">ages</span> <span class="o">=</span> <span class="n">ages</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">names</span> <span class="o">=</span> <span class="n">names</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">future</span> <span class="o">=</span> <span class="n">future</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="n">Students</span><span class="o">()</span> <span class="o">{</span>
+
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">validate</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">ConstraintViolation</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">Validation</span><span class="o">.</span><span class="na">buildDefaultValidatorFactory</span><span class="o">().</span><span class="na">getValidator</span><span class="o">().</span><span class="na">validate</span><span class="o">(</span><span class="n">object</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">t</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"field %s value %s illegal: %s"</span><span class="o">,</span> <span class="n">t</span><span class="o">.</span><span class="na">getPropertyPath</span><span class="o">().</span><span class="na">toString</span><span class="o">(),</span>
+                <span class="n">JSON</span><span class="o">.</span><span class="na">toJSON</span><span class="o">(</span><span class="n">t</span><span class="o">.</span><span class="na">getInvalidValue</span><span class="o">()),</span> <span class="n">t</span><span class="o">.</span><span class="na">getMessage</span><span class="o">())).</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">joining</span><span class="o">(</span><span class="s">"\n"</span><span class="o">));</span>
+
+    <span class="o">}</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="n">test</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Students</span> <span class="n">students</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Students</span><span class="o">(</span><span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="n">l</span><span class="o">,</span> <span class="mi">2</span><span class="n">l</span><span class="o">,</span> <span class="o">-</span><span class="mi">1</span><span class="n">l</span><span class="o">),</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">""</span><span class="o">,</span> <span class="s">"SuTong"</span><span class="o">,</span> <span class="kc">null</span><span class="o">),</span> <span class="mi">100</span><span class="n">l</span><span class="o">);</span>
+
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">validate</span><span class="o">(</span><span class="n">students</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre>
 </div>
 
 <p>OutPut:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>prices [100,1,2] must be greater than or equal to 10.0
-name ["car","",null] may not be null
-shipTime 1 must be in the future
+<div class="highlighter-rouge"><pre class="highlight"><code>field names value ["","SuTong",null] illegal: may not be null
+field future value 100 illegal: must be in the future
+field ages value [1,2,-1] illegal: must be greater than or equal to 0
 </code></pre>
 </div>
 
