@@ -134,14 +134,14 @@ System.out.println(Lists.newArrayList(Iterators.filter(Arrays.asList(1, 2, 3).it
 ```java
 public class Reduce {
 
-    public interface Function<T, R>{
+    public interface Function<T, R> {
         R apply(T t, R r);
     }
 
     public static <T, R> R reduce(final Iterator<? extends T> iterator, final R begin,
-                                  final Function<? super T, R> function){
+                                  final Function<? super T, R> function) {
         R ret = begin;
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             ret = function.apply(iterator.next(), ret);
         }
 
@@ -182,9 +182,9 @@ public interface BiFunction<T, U, R> {
 然后实现：
 
 ```java
-public class Zip {
+public class ZipJ7 {
     public static <T, U, R> Iterator<R> zip(final Iterator<? extends T> iteratorT, final Iterator<? extends U> iteratorU,
-                                  final BiFunction<? super T, ? super U, ? extends R> function){
+                                            final BiFunction<? super T, ? super U, ? extends R> function) {
 
         return new Iterator<R>() {
             @Override
@@ -204,7 +204,7 @@ public class Zip {
 例子：
 
 ```java
-System.out.println(Lists.newArrayList(Zip.zip(Arrays.asList(1l, 2l, 3l).iterator(),
+System.out.println(Lists.newArrayList(ZipJ7.zip(Arrays.asList(1l, 2l, 3l).iterator(),
         Lists.newArrayList(4l, 5l, 6l).iterator(),
         new BiFunction<Long, Long, Long>() {
             @Override
@@ -271,7 +271,7 @@ System.out.println(Stream.of(1, 2, 3).reduce(0l, (aLong, integer) -> aLong + int
 这个操作在Java 8中不存在，可以自己实现，不过构建`Stream`比构建`Iterator`要复杂一些：
 
 ```java
-public class ZipJ8 {
+public class Zip {
     public static <T, U, R> Stream<R> zip(final Stream<? extends T> streamT, final Stream<? extends U> streamU,
                                           final BiFunction<? super T, ? super U, ? extends R> biFunction) {
         Objects.requireNonNull(biFunction);
@@ -314,7 +314,7 @@ public class ZipJ8 {
 例子：
 
 ```java
-System.out.println(ZipJ8.zip(Stream.of(1l, 2l, 3l), Stream.of(4l, 5l, 6l), (aLong, aLong2) -> aLong + aLong2)
+System.out.println(Zip.zip(Stream.of(1l, 2l, 3l), Stream.of(4l, 5l, 6l), (aLong, aLong2) -> aLong + aLong2)
         .collect(Collectors.toList()));
 ```
 
