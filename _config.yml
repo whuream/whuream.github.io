@@ -1,8 +1,10 @@
 gems: [jekyll-paginate]
-markdown: kramdown
+markdown: redcarpet
 permalink: /posts/:year-:month-:day-:title.html
 author: ream
 paginate: 16
+highlighter: rouge
+safe: false
 
 defaults:
   -

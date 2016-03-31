@@ -257,44 +257,46 @@ Output:
 
 这个操作在Java 8中不存在，可以自己实现，不过构建`Stream`比构建`Iterator`要复杂一些：
 
-    public class ZipJ8 {
-        public static<T, U, R> Stream<R> zip(Stream<? extends T> streamA,
-                                             Stream<? extends U> streamB,
-                                             BiFunction<? super T, ? super U, ? extends R> biFunction) {
-            Objects.requireNonNull(biFunction);
-            @SuppressWarnings("unchecked")
-            Spliterator<T> spliteratorA = (Spliterator<T>) Objects.requireNonNull(streamA).spliterator();
-            @SuppressWarnings("unchecked")
-            Spliterator<U> spliteratorB = (Spliterator<U>) Objects.requireNonNull(streamB).spliterator();
+```java
+public class ZipJ8 {
+    public static<T, U, R> Stream<R> zip(Stream<? extends T> streamA,
+                                         Stream<? extends U> streamB,
+                                         BiFunction<? super T, ? super U, ? extends R> biFunction) {
+        Objects.requireNonNull(biFunction);
+        @SuppressWarnings("unchecked")
+        Spliterator<T> spliteratorA = (Spliterator<T>) Objects.requireNonNull(streamA).spliterator();
+        @SuppressWarnings("unchecked")
+        Spliterator<U> spliteratorB = (Spliterator<U>) Objects.requireNonNull(streamB).spliterator();
 
-            // Zipping looses DISTINCT and SORTED characteristics
-            int characteristics = spliteratorA.characteristics() & spliteratorB.characteristics() &
-                    ~(Spliterator.DISTINCT | Spliterator.SORTED);
+        // Zipping looses DISTINCT and SORTED characteristics
+        int characteristics = spliteratorA.characteristics() & spliteratorB.characteristics() &
+                ~(Spliterator.DISTINCT | Spliterator.SORTED);
 
-            long zipSize = ((characteristics & Spliterator.SIZED) != 0)
-                    ? Math.min(spliteratorA.getExactSizeIfKnown(), spliteratorB.getExactSizeIfKnown())
-                    : -1;
+        long zipSize = ((characteristics & Spliterator.SIZED) != 0)
+                ? Math.min(spliteratorA.getExactSizeIfKnown(), spliteratorB.getExactSizeIfKnown())
+                : -1;
 
-            Iterator<T> iteratorA = Spliterators.iterator(spliteratorA);
-            Iterator<U> iteratorB = Spliterators.iterator(spliteratorB);
-            Iterator<R> iteratorC = new Iterator<R>() {
-                @Override
-                public boolean hasNext() {
-                    return iteratorA.hasNext() && iteratorB.hasNext();
-                }
+        Iterator<T> iteratorA = Spliterators.iterator(spliteratorA);
+        Iterator<U> iteratorB = Spliterators.iterator(spliteratorB);
+        Iterator<R> iteratorC = new Iterator<R>() {
+            @Override
+            public boolean hasNext() {
+                return iteratorA.hasNext() && iteratorB.hasNext();
+            }
 
-                @Override
-                public R next() {
-                    return biFunction.apply(iteratorA.next(), iteratorB.next());
-                }
-            };
+            @Override
+            public R next() {
+                return biFunction.apply(iteratorA.next(), iteratorB.next());
+            }
+        };
 
-            Spliterator<R> split = Spliterators.spliterator(iteratorC, zipSize, characteristics);
-            return (streamA.isParallel() || streamB.isParallel())
-                    ? StreamSupport.stream(split, true)
-                    : StreamSupport.stream(split, false);
-        }
+        Spliterator<R> split = Spliterators.spliterator(iteratorC, zipSize, characteristics);
+        return (streamA.isParallel() || streamB.isParallel())
+                ? StreamSupport.stream(split, true)
+                : StreamSupport.stream(split, false);
     }
+}
+```
 
 例子：
 
