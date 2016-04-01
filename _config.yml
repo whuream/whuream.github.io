@@ -1,7 +1,7 @@
 gems: [jekyll-paginate]
 markdown: kramdown
 permalink: /posts/:year/:month/:day/:title.html
-author: ream
+author: SuTong
 paginate: 16
 highlighter: rouge
 safe: false
