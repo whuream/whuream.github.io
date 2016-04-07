@@ -5,6 +5,4 @@ layout: default
 
 ---
 
-ME
-
-![](./media/pic/20150904.jpg)
+蹩脚的[魔法师](./media/pic/20150904.jpg)
