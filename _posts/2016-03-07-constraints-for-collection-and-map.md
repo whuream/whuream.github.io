@@ -82,8 +82,6 @@
 
     validator:
 
-    public class ElementNotNullValidator implements ConstraintValidator<ElementNotNull, Object>{
-    
     ```java
     public class ElementNotNullValidator implements ConstraintValidator<ElementNotNull, Object> {
     
@@ -136,8 +134,6 @@
 
     validator:
 
-    public class SecondsFutureValidator implements ConstraintValidator<SecondsFuture, Object> {
-    
     ```java
     public class SecondsFutureValidator implements ConstraintValidator<SecondsFuture, Object> {
     
