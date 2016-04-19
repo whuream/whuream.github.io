@@ -402,8 +402,8 @@
 <span class="nv">$call</span><span class="p">(</span><span class="k">function</span><span class="p">(){</span>
     <span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
 
-    <span class="nb">array_walk</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$_</span><span class="p">){</span>
-        <span class="nv">$_</span> <span class="o">*=</span> <span class="nv">$_</span><span class="p">;</span>
+    <span class="nb">array_walk</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$param</span><span class="p">){</span>
+        <span class="nv">$param</span> <span class="o">*=</span> <span class="nv">$param</span><span class="p">;</span>
     <span class="p">});</span>
 
     <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
@@ -412,8 +412,8 @@
 <span class="nv">$call</span><span class="p">(</span><span class="k">function</span><span class="p">(){</span>
     <span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
 
-    <span class="nv">$array</span> <span class="o">=</span> <span class="nb">array_filter</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$_</span><span class="p">){</span>
-        <span class="k">return</span> <span class="nv">$_</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="nv">$array</span> <span class="o">=</span> <span class="nb">array_filter</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$value</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nv">$value</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">;</span>
     <span class="p">});</span>
 
     <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>

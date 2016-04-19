@@ -341,8 +341,8 @@ $call = function($_){
 $call(function(){
     $array = array(1, 2, 3, 4);
 
-    array_walk($array, function(&$_){
-        $_ *= $_;
+    array_walk($array, function(&$param){
+        $param *= $param;
     });
 
     var_dump($array);
@@ -351,8 +351,8 @@ $call(function(){
 $call(function(){
     $array = array(1, 2, 3, 4);
 
-    $array = array_filter($array, function($_){
-        return $_ > 1;
+    $array = array_filter($array, function($value){
+        return $value > 1;
     });
 
     var_dump($array);
