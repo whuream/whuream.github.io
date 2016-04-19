@@ -390,6 +390,77 @@
 
 <p><img src="/media/pic/1.pic.jpg" alt="" /></p>
 
+<h2 id="php">PHP</h2>
+
+<p>PHP 与 Python 差异不大：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;?</span> <span class="nx">php</span>
+<span class="nv">$call</span> <span class="o">=</span> <span class="k">function</span><span class="p">(</span><span class="nv">$_</span><span class="p">){</span>
+    <span class="nv">$_</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="nv">$call</span><span class="p">(</span><span class="k">function</span><span class="p">(){</span>
+    <span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+
+    <span class="nb">array_walk</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="o">&amp;</span><span class="nv">$_</span><span class="p">){</span>
+        <span class="nv">$_</span> <span class="o">*=</span> <span class="nv">$_</span><span class="p">;</span>
+    <span class="p">});</span>
+
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nv">$call</span><span class="p">(</span><span class="k">function</span><span class="p">(){</span>
+    <span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+
+    <span class="nv">$array</span> <span class="o">=</span> <span class="nb">array_filter</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$_</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nv">$_</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">});</span>
+
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$array</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nv">$call</span><span class="p">(</span><span class="k">function</span><span class="p">(){</span>
+    <span class="nv">$array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+
+    <span class="nv">$sum</span> <span class="o">=</span> <span class="nb">array_reduce</span><span class="p">(</span><span class="nv">$array</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$a</span><span class="p">,</span> <span class="nv">$b</span><span class="p">){</span>
+        <span class="k">return</span> <span class="nv">$a</span> <span class="o">+</span> <span class="nv">$b</span><span class="p">;</span>
+    <span class="p">},</span> <span class="mi">0</span><span class="p">);</span>
+
+    <span class="nb">var_dump</span><span class="p">(</span><span class="nv">$sum</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+</div>
+
+<p>输出：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>array(4) {
+  [0]=&gt;
+  int(1)
+  [1]=&gt;
+  int(4)
+  [2]=&gt;
+  int(9)
+  [3]=&gt;
+  int(16)
+}
+array(3) {
+  [1]=&gt;
+  int(2)
+  [2]=&gt;
+  int(3)
+  [3]=&gt;
+  int(4)
+}
+int(10)
+array(2) {
+  [2]=&gt;
+  int(3)
+  [3]=&gt;
+  int(4)
+}
+</code></pre>
+</div>
+
 </section>
 <section class="meta">
 

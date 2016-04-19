@@ -327,3 +327,74 @@ System.out.println(Zip.zip(Stream.of(1l, 2l, 3l), Stream.of(4l, 5l, 6l), (aLong,
 Example of abuse:
 
 ![](/media/pic/1.pic.jpg)
+
+## PHP
+
+PHP 与 Python 差异不大：
+
+```php
+<? php
+$call = function($_){
+    $_();
+};
+
+$call(function(){
+    $array = array(1, 2, 3, 4);
+
+    array_walk($array, function(&$_){
+        $_ *= $_;
+    });
+
+    var_dump($array);
+});
+
+$call(function(){
+    $array = array(1, 2, 3, 4);
+
+    $array = array_filter($array, function($_){
+        return $_ > 1;
+    });
+
+    var_dump($array);
+});
+
+$call(function(){
+    $array = array(1, 2, 3, 4);
+
+    $sum = array_reduce($array, function($a, $b){
+        return $a + $b;
+    }, 0);
+
+    var_dump($sum);
+});
+```
+
+输出：
+
+```
+array(4) {
+  [0]=>
+  int(1)
+  [1]=>
+  int(4)
+  [2]=>
+  int(9)
+  [3]=>
+  int(16)
+}
+array(3) {
+  [1]=>
+  int(2)
+  [2]=>
+  int(3)
+  [3]=>
+  int(4)
+}
+int(10)
+array(2) {
+  [2]=>
+  int(3)
+  [3]=>
+  int(4)
+}
+```
