@@ -1,0 +1,99 @@
+% !Mode:: "TeX:UTF-8"
+% +-----------------------------------------------------------------------------
+% | File: resume-zh
+% | Author: huxuan
+% | E-mail: i(at)huxuan.org
+% | Created: 2012-12-18
+% | Last modified: 2013-03-16
+% | Description:
+% |     A Chinese Resume Example in LaTeX based on resumecls
+% |
+% | Copyrgiht (c) 2012-2013 by huxuan. All rights reserved.
+% +-----------------------------------------------------------------------------
+
+\documentclass[zh, color, 11pt]{resumecls}
+
+\setmainfont{STHeiti}
+\setmonofont{STHeiti}
+\setsansfont{STHeiti}
+\setCJKmainfont{STHeiti}
+\setCJKmonofont{STHeiti}
+\setCJKsansfont{STHeiti}
+
+\name{苏通}
+\organization{阿里巴巴集团}
+\address{浙江省\ 杭州市\ 余杭区\ 五常大道\ 蒙卡岸小区}
+\mobile{+86 186 6701 6870}
+\mail{i@sutong.me}
+\homepage{sutong.me}
+
+\begin{document}
+
+\begin{table}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\heading{教育}
+\entry{2em}{Xrp{8em}}{
+    武汉大学 & 武汉 & 2011.9 - 2015.6 \\
+}
+\entry{4em}{rlrl}{
+    学士 & 计算机学院 & 信息安全专业 \\
+    平均分 & 85.43/100.00\\
+    CET4 & 528 & CET6 & 467\\
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\heading{工作\&实习}
+\entry{2em}{Xrp{8em}}{
+    淘宝（中国）软件有限公司 & 杭州 & 2015.7 - 现在
+}
+\entry{4em}{rlrl}{
+    \textbf{研发工程师} & 数字娱乐事业群-数字音乐事业部-产品技术-后台开发 \\
+    \textbf{参与项目} & 虾米音乐曲库服务，天天娱乐商品服务 
+}
+\entry{2em}{Xrp{8em}}{
+    淘宝（中国）软件有限公司 & 杭州 & 2014.7 - 2014.9
+}
+\entry{4em}{rlrl}{
+    \textbf{开发工程师} & 数字娱乐事业群-数字音乐事业部-虾米音乐-业务平台组 \\
+    \textbf{参与项目} & 歌词爬虫系统
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\heading{项目}
+\entry{2em}{rX}{
+    2013.12 & \textbf{MailManager} \\
+    简介 & MailManager是一款用于查看安卓手机上Gmail邮箱数据的软件。\\
+    组成 & 内核(python)，界面(pyqt)。\\
+    参与 & 数据库解析，负责人。\\
+    Repo & \href{https://github.com/brickgao/MailManager/}{github.com/brickgao/MailManager/} \\
+}
+
+\entry{2em}{rX}{
+    2013.01 & \textbf{图片密文模糊检索系统}\\
+    简介 & 使用DCT变换后的直流分量做特征向量，使用Logistic混沌序列加密在加密域中检索相近图片。 \\
+    组成 & 客户端内核(python)，客户端界面(pyqt)，服务端(python flask, sqlalchemy)。\\
+    参与 & 总体设计，性能测试，抗(图像)攻击测试，UI编码。\\
+    Repo & \href{https://github.com/mad4alcohol/ClientCore/}{github.com/mad4alcohol/ClientCore/} \\
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\heading{荣誉}
+\entry{2em}{lll}{
+    2014 & 第七届全国大学生信息安全竞赛 & 二等奖\\
+    2014 & 美国大学生数学建模竞赛(MCM/ICM) & 二等奖 \\
+    2013 & 软件设计师证书\\
+    2013(2014) & 校级丙等(乙等)奖学金\ \&\ 校级优秀学生 \\
+    2012 & 华中科技大学第十三届“飞航杯”大学生科技节之ACM程序设计大赛 & 三等奖 \\
+}
+
+
+\heading{技能}
+\entry{2em}{rl}{
+    语言 & C/C++，Python，HTML/CSS，Java。\\
+    工具 & Visual Studio，Pycharm，Idea，Cygwin，Git，Markdown，\LaTeX{}。\\
+}
+\end{table}
+\end{document}
+
